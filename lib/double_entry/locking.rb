@@ -67,8 +67,6 @@ module DoubleEntry
       # Lock the given accounts, creating account balance records for them if
       # needed.
       def perform_lock(&block)
-        ensure_outermost_transaction!
-
         unless lock_and_call(&block)
           create_missing_account_balances
           fail LockDisaster unless lock_and_call(&block)
